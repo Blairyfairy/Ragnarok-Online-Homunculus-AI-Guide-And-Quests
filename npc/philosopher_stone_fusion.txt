@@ -1,0 +1,148 @@
+//===== Philosopher’s Stone / Stone of the Sage Fusion NPC ===========
+//= High-tier alchemical fusion – intentionally hard and expensive
+//= Fullmetal Alchemist inspired (Equivalent Exchange)
+//====================================================================
+
+aldebaran,140,120,4	script	Stone of Truth Alchemist	4_M_ALCHE,{
+
+	mes "[Stone of Truth Alchemist]";
+	mes "Alchemy is the science of understanding, deconstructing, and reconstructing matter…";
+	mes "But some gates should only be opened by those who understand Equivalent Exchange.";
+	next;
+	mes "[Stone of Truth Alchemist]";
+	mes "I deal in the highest arts:";
+	mes "- Stone of the Sage";
+	mes "- Philosopher’s Stone fragments";
+	mes "- Ultimate fusion of alchemy and Homunculus power";
+	next;
+
+	switch(select(
+		"Attempt Stone of the Sage creation",
+		"Attempt Philosopher’s Stone (HARD)",
+		"Exchange materials for Sage fragments",
+		"Hear the words of Equivalent Exchange",
+		"Leave"
+	)) {
+
+	// -------------------------------------------------
+	// Stone of the Sage (hard but achievable)
+	// -------------------------------------------------
+	case 1:
+		mes "[Stone of Truth Alchemist]";
+		mes "To create a ^0000FFStone of the Sage^000000 I require:";
+		mes "- 50× Immortal Heart";
+		mes "- 30× Empty Bottle";
+		mes "- 10× Medicine Bowl";
+		mes "- 5× Acid Bottle";
+		mes "- 1× high-grade gem (Amethyst or better)";
+		mes "- 5,000,000 zeny";
+		mes "Success is not guaranteed… but higher than the true Stone.";
+		next;
+		if (select("I accept the exchange:Cancel") == 2) close;
+
+		if (countitem(1037) < 50) { mes "Not enough Immortal Hearts."; close; }
+		if (countitem(713) < 30)  { mes "Not enough Empty Bottles."; close; }
+		if (countitem(7134) < 10) { mes "Not enough Medicine Bowls."; close; }
+		if (countitem(7135) < 5)  { mes "Not enough Acid Bottles."; close; }  // confirm Acid Bottle ID
+		if (countitem(719) < 1)   { mes "Need at least 1 Amethyst."; close; }
+		if (Zeny < 5000000)       { mes "Need 5,000,000 zeny."; close; }
+
+		delitem 1037,50;
+		delitem 713,30;
+		delitem 7134,10;
+		delitem 7135,5;
+		delitem 719,1;
+		Zeny -= 5000000;
+
+		// 60% success for Stone of the Sage (adjust for your rates)
+		if (rand(100) < 60) {
+			getitem 19620,1;	// Stone of the Sage (custom ID)
+			mes "[Stone of Truth Alchemist]";
+			mes "The exchange is complete… The Stone of the Sage is yours.";
+		} else {
+			mes "[Stone of Truth Alchemist]";
+			mes "The circle rejected the offering. The materials are lost.";
+			mes "Such is the law of Equivalent Exchange.";
+		}
+		close;
+
+	// -------------------------------------------------
+	// Philosopher’s Stone (very hard)
+	// -------------------------------------------------
+	case 2:
+		mes "[Stone of Truth Alchemist]";
+		mes "^FF0000Philosopher’s Stone^000000 – the ultimate catalyst.";
+		mes "Requirements (all mandatory):";
+		mes "- 3× Stone of the Sage";
+		mes "- 100× Immortal Heart";
+		mes "- 50× Acid Bottle";
+		mes "- 20× high-tier alchemy materials (or equivalent)";
+		mes "- 20,000,000 zeny";
+		mes "- Homunculus must be summoned and have high intimacy (flavor check)";
+		mes " ";
+		mes "Success rate is deliberately low. Many have failed.";
+		next;
+		if (select("I understand the risk – proceed:Cancel") == 2) close;
+
+		if (countitem(19620) < 3) { mes "You need 3 Stones of the Sage."; close; }
+		if (countitem(1037) < 100){ mes "Not enough Immortal Hearts."; close; }
+		if (countitem(7135) < 50) { mes "Not enough Acid Bottles."; close; }
+		if (Zeny < 20000000)      { mes "Need 20,000,000 zeny."; close; }
+
+		delitem 19620,3;
+		delitem 1037,100;
+		delitem 7135,50;
+		Zeny -= 20000000;
+
+		// Very low success – 15% base (make harder or easier as desired)
+		if (rand(100) < 15) {
+			getitem 19621,1;	// Philosopher’s Stone (custom ID)
+			mes "[Stone of Truth Alchemist]";
+			mes "…It is done.";
+			mes "The Philosopher’s Stone shines in your hands.";
+			mes "Remember… Equivalent Exchange.";
+		} else {
+			mes "[Stone of Truth Alchemist]";
+			mes "The Gate rejected you.";
+			mes "All materials have been consumed.";
+			mes "The truth is cruel.";
+		}
+		close;
+
+	// -------------------------------------------------
+	// Fragment exchange (easier entry)
+	// -------------------------------------------------
+	case 3:
+		mes "[Stone of Truth Alchemist]";
+		mes "I can break down lesser alchemy into Sage fragments.";
+		mes "Bring me 20 Immortal Hearts + 1,000,000 zeny for 1 fragment.";
+		next;
+		if (select("Exchange:Cancel") == 2) close;
+		if (countitem(1037) < 20 || Zeny < 1000000) {
+			mes "Insufficient materials."; close;
+		}
+		delitem 1037,20;
+		Zeny -= 1000000;
+		getitem 19622,1;	// Sage Fragment
+		mes "A fragment of the Sage’s knowledge… use it wisely.";
+		close;
+
+	// -------------------------------------------------
+	// Lore
+	// -------------------------------------------------
+	case 4:
+		mes "[Stone of Truth Alchemist]";
+		mes "“Humankind cannot gain anything without first giving something in return.";
+		mes "To obtain, something of equal value must be lost.";
+		mes "That is alchemy’s first law of Equivalent Exchange.”";
+		next;
+		mes "[Stone of Truth Alchemist]";
+		mes "The Philosopher’s Stone is said to bypass that law…";
+		mes "but the price is always paid by someone.";
+		close;
+
+	case 5:
+		mes "The circle remains open… for now.";
+		close;
+	}
+}

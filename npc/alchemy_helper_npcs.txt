@@ -1,0 +1,99 @@
+//===== Alchemy & Acid Bottle Helper NPCs (Mid-rate) =================
+//= Makes Creator / Genetic life easier + leads toward the Stone
+//====================================================================
+
+// 1. Acid Bottle Material Trader (Al De Baran)
+aldebaran,165,110,4	script	Acid Material Trader	4_M_ALCHE,{
+	mes "[Acid Material Trader]";
+	mes "Need Immortal Hearts or Empty Bottles for Acid Demonstration?";
+	mes "I sell them at fair mid-rate prices.";
+	mes "Those seeking the ^FF0000Philosopher’s Stone^000000 often start here.";
+	next;
+	switch(select(
+		"Buy Immortal Heart (50,000z each)",
+		"Buy Empty Bottle (1,000z each)",
+		"Buy Medicine Bowl (5,000z each)",
+		"Buy Acid Bottle Creation Guide (100,000z)",
+		"Ask about the Stone of the Sage",
+		"Nothing"
+	)) {
+	case 1:
+		mes "How many Immortal Hearts?";
+		input .@qty;
+		if (.@qty < 1 || .@qty > 100) close;
+		.@cost = .@qty * 50000;
+		if (Zeny < .@cost) { mes "Not enough zeny."; close; }
+		Zeny -= .@cost;
+		getitem 1037, .@qty;	// Immortal Heart
+		mes "Here you go. May your alchemy be pure.";
+		close;
+	case 2:
+		mes "How many Empty Bottles?";
+		input .@qty;
+		if (.@qty < 1 || .@qty > 500) close;
+		.@cost = .@qty * 1000;
+		if (Zeny < .@cost) { mes "Not enough zeny."; close; }
+		Zeny -= .@cost;
+		getitem 713, .@qty;
+		mes "Done.";
+		close;
+	case 3:
+		mes "How many Medicine Bowls?";
+		input .@qty;
+		if (.@qty < 1 || .@qty > 100) close;
+		.@cost = .@qty * 5000;
+		if (Zeny < .@cost) { mes "Not enough zeny."; close; }
+		Zeny -= .@cost;
+		getitem 7134, .@qty;
+		mes "Done.";
+		close;
+	case 4:
+		if (Zeny < 100000) { mes "Need 100,000 zeny."; close; }
+		Zeny -= 100000;
+		getitem 7129,1;			// Acid Bottle Creation Guide
+		mes "Study well, Creator.";
+		close;
+	case 5:
+		mes "[Acid Material Trader]";
+		mes "The Stone of the Sage… and the true Philosopher’s Stone…";
+		mes "are not sold here. Seek the Stone of Truth Alchemist.";
+		mes "He demands Equivalent Exchange.";
+		close;
+	case 6:
+		close;
+	}
+}
+
+// 2. Genetic Gear Helper (Lighthalzen)
+lighthalzen,200,150,4	script	Genetic Supplier	4_F_SCIENCE,{
+	mes "[Genetic Supplier]";
+	mes "I help Genetics with plant bottles, grenades, and special gears.";
+	mes "Some of my finest clients later sought the Philosopher’s Stone.";
+	next;
+	switch(select(
+		"Buy Plant Bottle materials pack",
+		"Buy Bottle Grenade materials pack",
+		"Buy Genetic Starter Gear Box",
+		"Leave"
+	)) {
+	case 1:
+		if (Zeny < 250000) { mes "Need 250,000 zeny."; close; }
+		Zeny -= 250000;
+		getitem 710,20;
+		mes "Materials for Plant Bottles delivered.";
+		close;
+	case 2:
+		if (Zeny < 300000) { mes "Need 300,000 zeny."; close; }
+		Zeny -= 300000;
+		mes "Grenade materials delivered.";
+		close;
+	case 3:
+		if (Zeny < 1000000) { mes "Need 1,000,000 zeny."; close; }
+		Zeny -= 1000000;
+		getitem 19610,1;
+		mes "Starter Genetic gear obtained.";
+		close;
+	case 4:
+		close;
+	}
+}

@@ -1,0 +1,72 @@
+//===== Genetic Build & Card Trainer NPC ============================
+//= Gives best builds and card recommendations for Genetics
+//====================================================================
+
+prontera,150,190,4	script	Genetic Build Master	4_M_SAGE,{
+	mes "[Genetic Build Master]";
+	mes "I analyze Genetic builds for mid-rate servers.";
+	mes "What do you need?";
+	next;
+	switch(select(
+		"Highest damage Cart Cannon build",
+		"Acid Demonstration focused build",
+		"Homunculus-focused Genetic",
+		"Card recommendations for my current gear",
+		"From-scratch Biolo / Genetic progression",
+		"Nothing"
+	)) {
+	case 1:
+		mes "[Genetic Build Master]";
+		mes "^FF0000Cart Cannon Highest DPS (Mid-rate)^000000";
+		mes " ";
+		mes "Stats priority: DEX > INT > LUK > AGI";
+		mes "Weapon: High ATK / DEX weapon with Cannon cards";
+		mes "Recommended cards:";
+		mes "- Turtle General / Dracula / high ATK cards";
+		mes "- Race / Size / Element cards matching your target map";
+		mes "Homunculus: Sera or Eleanor for support / damage";
+		mes " ";
+		mes "Key skills: Cart Cannon, Cart Boost, Genetic skills that increase cannon damage.";
+		close;
+	case 2:
+		mes "[Genetic Build Master]";
+		mes "^FF0000Acid Demonstration Build^000000";
+		mes " ";
+		mes "Stats: INT / DEX / LUK for success rate + damage";
+		mes "Keep high Prepare Potion and Potion Research levels";
+		mes "Cards: anything that boosts magic or acid damage";
+		mes "Always carry plenty of Acid Bottles (use the helper NPCs).";
+		close;
+	case 3:
+		mes "[Genetic Build Master]";
+		mes "^FF0000Homunculus-Focused Genetic^000000";
+		mes " ";
+		mes "Invest in Homunculus skill tree and AI.";
+		mes "Recommended Homunculus S: Sera (support) or Bayeri / Eleanor for damage.";
+		mes "Owner plays more support / utility while Homunculus carries.";
+		mes "Use the AzzyAI mid-rate config from this pack.";
+		close;
+	case 4:
+		mes "[Genetic Build Master]";
+		mes "Show me your equipment (this is a text guide version).";
+		mes "In a full implementation the NPC would read your gear.";
+		mes "General advice:";
+		mes "- Weapon: race/size/element cards";
+		mes "- Armor: high DEF + HP or damage reduction";
+		mes "- Garment: Aspersio or elemental resist";
+		mes "- Shoes: AGI or HP";
+		mes "- Accessory: DEX / INT / ASPD";
+		close;
+	case 5:
+		mes "[Genetic Build Master]";
+		mes "From Merchant → Alchemist → Creator → Genetic:";
+		mes "1. Level Prepare Potion early";
+		mes "2. Farm Immortal Hearts & Empty Bottles";
+		mes "3. Complete the Super Quest in this pack";
+		mes "4. Switch to Genetic as soon as possible";
+		mes "5. Focus Cart Cannon or Acid Demo depending on maps";
+		close;
+	case 6:
+		close;
+	}
+}
