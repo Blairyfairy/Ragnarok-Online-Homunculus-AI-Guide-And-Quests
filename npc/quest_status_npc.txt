@@ -1,0 +1,38 @@
+//===== Quest Status Checker =========================================
+//= Lets players check their Philosopher’s Stone quest progress
+//====================================================================
+
+aldebaran,160,105,4	script	Quest Chronicle	4_F_02,{
+	mes "[Quest Chronicle]";
+	mes "I record the progress of those who walk the Path of the Stone.";
+	next;
+
+	switch(PHILO_QUEST) {
+	case 0:
+		mes "You have not yet begun the Path.";
+		mes "Speak with the Brotherhood of Alchemy nearby.";
+		break;
+	case 1:
+		mes "Step 1 complete.";
+		mes "Next: Go to Geffen and find the Heart Collector.";
+		mes "Bring him 20 Immortal Hearts.";
+		break;
+	case 2:
+		mes "Step 2 complete.";
+		mes "Next: Travel to Lighthalzen and speak with the Biolab Courier.";
+		break;
+	case 3:
+		mes "Step 3 complete.";
+		mes "Next: Go to Hugel and meet the Homunculus Resonator.";
+		break;
+	case 4:
+		mes "Step 4 complete.";
+		mes "Return to Al De Baran and claim your final reward from the Brotherhood.";
+		break;
+	default:
+		mes "You have completed the full Path of the Philosopher’s Stone.";
+		mes "The Stone of Truth Alchemist can attempt the ultimate creation.";
+		break;
+	}
+	close;
+}

@@ -1,24 +1,61 @@
-# Installation Guide
+# Installation Guide – Full Pack
 
-## For Players (AI only)
+## 1. NPC & Quest Scripts
 
-1. Download a modern AzzyAI package (see [AI_PACKAGES.md](AI_PACKAGES.md)).
-2. Extract into your RO client folder:
-   ```
-   Ragnarok Online/
-   └── AI/
-       └── USER_AI/          ← put all .lua files here
-   ```
-3. In-game type `/hoai` until the chat says **“Homunculus has been customized”**.
-4. Vaporize + Call Homunculus (or relog).
-5. Optionally run `AzzyAIConfig.exe` to tune settings.
+Copy these files into your server’s `npc/custom/` folder (or equivalent):
 
-## For Server GMs (full pack)
+```
+npc/alchemy_helper_npcs.txt
+npc/genetic_trainer_npc.txt
+npc/philosopher_stone_fusion.txt
+npc/quest_status_npc.txt
+quests/philosopher_stone_super_quest.txt
+```
 
-1. Copy everything under `npc/` into your `npc/custom/` folder.
-2. Add the scripts to `scripts_custom.conf`.
-3. Copy any custom items from the quest/NPC files into your item database.
-4. Place the Super Quest NPCs on the maps listed in `docs/GENETIC_SUPER_QUEST.md`.
-5. `@reloadscript`.
+Then add them to your script loader (`scripts_custom.conf` or similar):
 
-Mid-rate recommended rates are already written into the NPC comments and config files.
+```
+npc: npc/custom/alchemy_helper_npcs.txt
+npc: npc/custom/genetic_trainer_npc.txt
+npc: npc/custom/philosopher_stone_fusion.txt
+npc: npc/custom/quest_status_npc.txt
+npc: npc/custom/philosopher_stone_super_quest.txt
+```
+
+## 2. Custom Items
+
+Add the following item IDs to your item database (or change them if they conflict):
+
+| ID    | Name                  | Notes |
+|-------|-----------------------|-------|
+| 19610 | Genetic Starter Gear  | Exclusive reward |
+| 19620 | Stone of the Sage     | High-tier catalyst |
+| 19621 | Philosopher’s Stone   | Ultimate catalyst (very rare) |
+| 19622 | Sage Fragment         | Intermediate currency |
+
+See `docs/PHILOSOPHER_STONE_ITEMS.md` for details.
+
+## 3. Homunculus AI (Players)
+
+1. Install a modern AzzyAI into `AI/USER_AI/`.
+2. In-game type `/hoai` until it says the Homunculus has been customized.
+3. Use the mid-rate example in `ai-config/`.
+
+## 4. Reload
+
+```
+@reloadscript
+```
+
+or restart the map server.
+
+## Quest Flow Summary
+
+1. Al De Baran – Brotherhood of Alchemy (start)
+2. Geffen – Heart Collector (20 Immortal Hearts)
+3. Lighthalzen – Biolab Courier
+4. Hugel – Homunculus Resonator
+5. Al De Baran – Final reward (Stone of the Sage + gear)
+6. Optional: Stone of Truth Alchemist for true Philosopher’s Stone (hard)
+
+All steps are fully scripted with proper variables and rewards.

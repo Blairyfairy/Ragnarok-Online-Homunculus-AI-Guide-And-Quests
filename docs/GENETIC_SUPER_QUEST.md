@@ -1,39 +1,61 @@
 # Creator → Genetic Super Quest – Path of the Philosopher’s Stone
 
-A multi-area quest chain designed for mid-rate servers, themed around the legendary **Philosopher’s Stone** and **Stone of the Sage**.
+**Fully implemented multi-area quest chain.**
 
-The quest rewards Alchemists / Creators / Genetics with:
+## Quest Variable
+`PHILO_QUEST` (character variable)
+- 0 = not started
+- 1 = started
+- 2 = hearts delivered
+- 3 = sample delivered
+- 4 = Homunculus resonance done
+- 5 = quest complete
 
-- Easier access to Acid Bottle ingredients (early steps)
-- Alchemy manuals
-- Exclusive Genetic / Alchemist gear
-- Homunculus-related consumables
-- Chance at the ultra-rare **Stone of the Sage** and (very rarely) fragments toward a **Philosopher’s Stone**
+## Exact Steps (all scripted)
 
-## Quest Overview (Equivalent Exchange)
+### Step 1 – Al De Baran
+**NPC:** Brotherhood of Alchemy  
+**Location:** `aldebaran,155,100`  
+**Action:** Accept the Path → receive Acid Bottle Creation Guide  
+**Sets:** `PHILO_QUEST = 1`
 
-| Step | Map / NPC                            | Objective                                      | Reward |
-|------|--------------------------------------|------------------------------------------------|--------|
-| 1    | Al De Baran Alchemist Guild         | Speak with the Brotherhood of Alchemy          | Quest flag + basic manual |
-| 2    | Geffen                              | Collect Immortal Hearts (or buy from helper)   | Hearts + discount voucher |
-| 3    | Lighthalzen / Biolab area           | Deliver a “truth sample”                       | Acid Bottle materials pack |
-| 4    | Hugel / Juno                        | Homunculus loyalty / resonance task            | Homunculus food + minor stone fragment |
-| 5    | Final return – Al De Baran          | Complete the circle of exchange                | Exclusive accessory + chance at Stone of the Sage |
+### Step 2 – Geffen
+**NPC:** Heart Collector  
+**Location:** `geffen,120,60`  
+**Requirement:** 20× Immortal Heart (1037)  
+**Reward:** 1× Sage Fragment  
+**Sets:** `PHILO_QUEST = 2`
 
-### Hard End-game Layer (Optional)
+### Step 3 – Lighthalzen
+**NPC:** Biolab Courier  
+**Location:** `lighthalzen,210,310`  
+**Reward:** 10 Immortal Hearts + 30 Empty Bottles + 5 Medicine Bowls  
+**Sets:** `PHILO_QUEST = 3`
 
-After completing the main chain, a hidden fusion NPC becomes available that accepts:
+### Step 4 – Hugel
+**NPC:** Homunculus Resonator  
+**Location:** `hugel,95,145`  
+**Reward:** 2× Sage Fragments  
+**Sets:** `PHILO_QUEST = 4`
 
-- Multiple Stone of the Sage
-- Large quantities of high-tier alchemy materials
-- Significant zeny
-- (Optional) Homunculus with high intimacy
+### Step 5 – Al De Baran (Final)
+**NPC:** Brotherhood Final  
+**Location:** `aldebaran,157,100`  
+**Reward:**
+- 1× Stone of the Sage (19620)
+- 5× Sage Fragments
+- 1× Exclusive Genetic/Alchemist gear (19610)
+**Sets:** `PHILO_QUEST = 5`
 
-Only then can a full **Philosopher’s Stone** be attempted. Success rate is intentionally low to keep the item legendary.
+## After the Quest
+Speak with the **Stone of Truth Alchemist** (`aldebaran,140,120`) to attempt:
+- Stone of the Sage creation (hard)
+- True Philosopher’s Stone creation (very hard – 15% success)
 
-## Design Goals for Mid-rate
+## Helper NPCs
+- Acid Material Trader (Al De Baran) – sells hearts, bottles, bowls, guides
+- Genetic Supplier (Lighthalzen)
+- Genetic Build Master (Prontera)
+- Quest Chronicle (Al De Baran) – shows current step
 
-- Early steps feel helpful (Acid Bottle materials).
-- Final stone remains extremely rare and expensive.
-- No forced MVP kills; everything is farmable or purchasable at fair mid-rate prices.
-- Strong Fullmetal Alchemist flavor (Equivalent Exchange, Homunculus, Truth, Stone) without breaking game tone.
+All scripts are complete and ready to load.

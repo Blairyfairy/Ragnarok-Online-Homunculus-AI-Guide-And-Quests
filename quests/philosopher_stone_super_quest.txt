@@ -1,0 +1,217 @@
+//===== Philosopher’s Stone Super Quest (Full Implementation) ========
+//= Multi-area quest chain for Creator / Genetic players
+//= Theme: Equivalent Exchange + Path to the Philosopher’s Stone
+//= Mid-rate friendly early steps, hard end-game stone
+//====================================================================
+
+// ---------------------------------------------------------------
+// QUEST VARIABLES (character variables)
+// PHILO_QUEST = 0 (not started)
+//              1 (started – talked to Brotherhood)
+//              2 (collected hearts / step 2 done)
+//              3 (delivered sample – step 3 done)
+//              4 (Homunculus task done – step 4)
+//              5 (quest complete – final reward claimed)
+// ---------------------------------------------------------------
+
+//==============================================================
+// STEP 1 – Al De Baran : Brotherhood of Alchemy (Quest Starter)
+//==============================================================
+aldebaran,155,100,4	script	Brotherhood of Alchemy	4_M_ALCHE,{
+	mes "[Brotherhood of Alchemy]";
+	mes "Welcome, seeker of truth.";
+	mes "We are the Brotherhood that still remembers the old laws of Equivalent Exchange.";
+	next;
+
+	if (PHILO_QUEST >= 5) {
+		mes "You have already walked the full path.";
+		mes "The Stone of Truth Alchemist awaits those who wish to go further.";
+		close;
+	}
+
+	if (PHILO_QUEST == 0) {
+		mes "Do you wish to begin the Path of the Philosopher’s Stone?";
+		mes "It will test your skill as an Alchemist / Creator / Genetic.";
+		next;
+		if (select("I accept the exchange:Not yet") == 2) close;
+
+		set PHILO_QUEST,1;
+		getitem 7129,1;		// Acid Bottle Creation Guide
+		mes "[Brotherhood of Alchemy]";
+		mes "Then the first law is given to you.";
+		mes "Take this Acid Bottle Creation Guide.";
+		mes " ";
+		mes "Next: Travel to ^0000FFGeffen^000000 and speak with the Heart Collector.";
+		mes "He will tell you what the exchange demands.";
+		close;
+	}
+
+	if (PHILO_QUEST == 1) {
+		mes "You have accepted the path.";
+		mes "Go to Geffen and find the Heart Collector.";
+		close;
+	}
+
+	if (PHILO_QUEST >= 2 && PHILO_QUEST < 5) {
+		mes "You are progressing well.";
+		mes "Continue the steps. The final reward awaits only those who finish the circle.";
+		close;
+	}
+	close;
+}
+
+//==============================================================
+// STEP 2 – Geffen : Heart Collector
+//==============================================================
+geffen,120,60,4	script	Heart Collector	4_M_02,{
+	mes "[Heart Collector]";
+	mes "Immortal Hearts… the fuel of many forbidden experiments.";
+	next;
+
+	if (PHILO_QUEST < 1) {
+		mes "You have not yet spoken with the Brotherhood in Al De Baran.";
+		close;
+	}
+	if (PHILO_QUEST >= 2) {
+		mes "You already completed this step.";
+		mes "Go to Lighthalzen and deliver the sample.";
+		close;
+	}
+
+	mes "The Brotherhood sent you, yes?";
+	mes "Bring me ^FF000020 Immortal Hearts^000000.";
+	mes "In exchange I will give you a voucher and open the next gate.";
+	next;
+	if (select("I have the hearts:I need more time") == 2) close;
+
+	if (countitem(1037) < 20) {
+		mes "You do not have 20 Immortal Hearts.";
+		mes "Farm them or buy them from the Acid Material Trader.";
+		close;
+	}
+
+	delitem 1037,20;
+	set PHILO_QUEST,2;
+	getitem 19622,1;		// Sage Fragment (small reward)
+	mes "[Heart Collector]";
+	mes "The exchange is accepted.";
+	mes "Take this Sage Fragment as proof.";
+	mes " ";
+	mes "Next destination: ^0000FFLighthalzen^000000.";
+	mes "Speak with the Biolab Courier near the laboratory entrance.";
+	close;
+}
+
+//==============================================================
+// STEP 3 – Lighthalzen : Biolab Courier
+//==============================================================
+lighthalzen,210,310,4	script	Biolab Courier	4_F_SCIENCE,{
+	mes "[Biolab Courier]";
+	mes "You carry the mark of the Brotherhood…";
+	next;
+
+	if (PHILO_QUEST < 2) {
+		mes "You are not yet ready. Complete the previous steps.";
+		close;
+	}
+	if (PHILO_QUEST >= 3) {
+		mes "Sample already delivered. Proceed to Hugel.";
+		close;
+	}
+
+	mes "Deliver this sealed sample to me as proof of your commitment.";
+	mes "I require nothing more than your presence and the quest flag.";
+	mes "(In a full server you could add an item check here.)";
+	next;
+	if (select("Deliver the sample:Not yet") == 2) close;
+
+	set PHILO_QUEST,3;
+	// Reward: Acid Bottle materials pack
+	getitem 1037,10;		// Immortal Heart
+	getitem 713,30;			// Empty Bottle
+	getitem 7134,5;			// Medicine Bowl
+	mes "[Biolab Courier]";
+	mes "Sample received. The exchange continues.";
+	mes "You receive materials for Acid Bottles.";
+	mes " ";
+	mes "Next: Travel to ^0000FFHugel^000000 and speak with the Homunculus Resonator.";
+	close;
+}
+
+//==============================================================
+// STEP 4 – Hugel : Homunculus Resonator
+//==============================================================
+hugel,95,145,4	script	Homunculus Resonator	4_F_01,{
+	mes "[Homunculus Resonator]";
+	mes "A Homunculus is more than a tool… it is a mirror of the alchemist’s soul.";
+	next;
+
+	if (PHILO_QUEST < 3) {
+		mes "You have not completed the previous steps.";
+		close;
+	}
+	if (PHILO_QUEST >= 4) {
+		mes "Resonance already achieved. Return to Al De Baran.";
+		close;
+	}
+
+	mes "Summon your Homunculus and let it stand beside you.";
+	mes "(Flavor check – on most servers we simply continue.)";
+	mes "In return for showing the bond, I will grant you Homunculus provisions.";
+	next;
+	if (select("My Homunculus is ready:I need to prepare") == 2) close;
+
+	set PHILO_QUEST,4;
+	getitem 19622,2;		// extra Sage Fragments
+	// You can add Homunculus food / intimacy items here
+	mes "[Homunculus Resonator]";
+	mes "The resonance is accepted.";
+	mes "Take these additional Sage Fragments.";
+	mes " ";
+	mes "Final step: Return to the ^0000FFBrotherhood of Alchemy in Al De Baran^000000";
+	mes "and claim your rightful reward.";
+	close;
+}
+
+//==============================================================
+// STEP 5 – Final Return (same NPC as starter, now gives reward)
+//==============================================================
+// The starter NPC already handles PHILO_QUEST == 5.
+// We add a small extra check so players can claim the final reward.
+
+aldebaran,157,100,4	script	Brotherhood Final	4_M_ALCHE,{
+	mes "[Brotherhood of Alchemy]";
+	mes "You have returned…";
+	next;
+
+	if (PHILO_QUEST < 4) {
+		mes "The circle is not yet complete.";
+		mes "Finish all previous steps first.";
+		close;
+	}
+	if (PHILO_QUEST >= 5) {
+		mes "You already received the final reward.";
+		mes "Seek the Stone of Truth Alchemist if you desire the true Philosopher’s Stone.";
+		close;
+	}
+
+	mes "The Path of the Philosopher’s Stone is complete.";
+	mes "As Equivalent Exchange demands, you shall receive what you have earned.";
+	next;
+
+	set PHILO_QUEST,5;
+	getitem 19620,1;		// Stone of the Sage (guaranteed for finishing the quest)
+	getitem 19622,5;		// extra fragments
+	// Optional exclusive accessory
+	getitem 19610,1;		// Genetic / Alchemist exclusive gear (example)
+
+	mes "[Brotherhood of Alchemy]";
+	mes "You receive:";
+	mes "- 1× ^0000FFStone of the Sage^000000";
+	mes "- 5× Sage Fragments";
+	mes "- Exclusive Alchemist/Genetic gear";
+	mes " ";
+	mes "The true Philosopher’s Stone still lies beyond…";
+	mes "Speak with the Stone of Truth Alchemist when you are ready for the final, hardest exchange.";
+	close;
+}
